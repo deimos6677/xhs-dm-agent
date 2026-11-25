@@ -312,7 +312,7 @@ export async function callOpenAICompatible({
       body: payload,
       signal: AbortSignal.timeout(timeoutMs)
     });
-    if (!res.ok) throw new Error(`LLM HTTP ${res.status}: ${await res.text()}`);
+    if (!res.ok) throw new Error(`LLM HTTP ${res.status}`);
     const body = await res.json();
     return body.choices?.[0]?.message?.content || "";
   }
@@ -328,14 +328,13 @@ export async function callOpenAICompatible({
   const resFile = path.join(os.tmpdir(), `xhs-res-${id}.json`);
   const maxTimeSec = Math.max(5, Math.ceil(timeoutMs / 1000));
 
-  await fs.writeFile(hdrFile, `content-type: application/json\nauthorization: Bearer ${apiKey}\n`, { encoding: "utf8", mode: 0o600 });
-  await fs.writeFile(reqFile, payload, "utf8");
-
   const args = ["-sS", "--max-time", String(maxTimeSec)];
   if (effectiveProxy) args.push("-x", effectiveProxy);
   args.push("-X", "POST", "-H", `@${hdrFile}`, "--data-binary", `@${reqFile}`, "-o", resFile, "-w", "%{http_code}", url);
 
   try {
+    await fs.writeFile(hdrFile, `content-type: application/json\nauthorization: Bearer ${apiKey}\n`, { encoding: "utf8", mode: 0o600 });
+    await fs.writeFile(reqFile, payload, { encoding: "utf8", mode: 0o600 });
     const statusCode = await new Promise((resolve, reject) => {
       execFile("curl.exe", args, { windowsHide: true, timeout: timeoutMs + 3000 }, (err, stdout, stderr) => {
         if (err) return reject(new Error(`curl 调用失败: ${(stderr || err.message).trim()}`));
@@ -345,7 +344,7 @@ export async function callOpenAICompatible({
     const rawRes = await fs.readFile(resFile, "utf8").catch(() => "");
     const codeNum = Number(statusCode);
     if (!(codeNum >= 200 && codeNum < 300)) {
-      throw new Error(`LLM HTTP ${statusCode}: ${rawRes.slice(0, 300)}`);
+      throw new Error(`LLM HTTP ${statusCode}`);
     }
     const body = JSON.parse(rawRes);
     return body.choices?.[0]?.message?.content || "";

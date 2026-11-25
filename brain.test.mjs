@@ -253,6 +253,12 @@ assert.match(emptyRecoverTurn.retriedReason, /replies为空/);
 assert.equal(emptyRecoverTurn.skipped, false);
 assert.deepEqual(emptyRecoverTurn.replies, ["你在哪个城市呀？"]);
 
+// 上游报错可能回显私信或认证信息；不要把正文写入错误日志。
+await assert.rejects(callOpenAICompatible({
+  apiBaseUrl: "https://example.invalid", apiKey: "test-key", model: "test", messages: [],
+  fetchImpl: async () => new Response("private-test-marker", { status: 403 })
+}), { message: "LLM HTTP 403" });
+
 // 7. 实测 curl.exe 本地 HTTP UTF-8 与 @hdrFile Bearer 认证闭环
 const server = http.createServer((req, res) => {
   let raw = "";

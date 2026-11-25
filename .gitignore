@@ -1,6 +1,9 @@
 config.json
 prompt.local.md
 candidates*.json
+.candidates*.json.*.tmp
+.env
+.env.*
 candidates-summary*.md
 daemon.lock
 .daemon-entry.mjs

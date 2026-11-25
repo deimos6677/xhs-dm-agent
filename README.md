@@ -1,8 +1,8 @@
 # xhs-dm-agent
 
-**Zero-dependency AI DM screening & auto-reply daemon for Xiaohongshu (小红书 / RedNote) personal web chat (`xiaohongshu.com/chat`), built on `ego lite` browser automation.**
+在独立的 `ego lite` 浏览器空间里整理小红书个人号收到的私信。先用 `-DryRun` 查看拟回复；启用发送后，程序会在提交前核对会话，遇到不确定的发送结果不会自动重发。
 
-> 基于 `ego lite` 真实浏览器隔离环境的**小红书普通个人号网页私信 AI 自动回复与候选人筛选守护进程**——零第三方 npm 依赖，内置**主页背调、结构化槽位提取、四道发信防错发闸门、三态发送验收、出站合规守卫与人工无缝接管**。
+> **试跑不等于离线。** `-DryRun` 不向小红书发送回复，但仍会读取聊天内容、调用配置的模型并写入本地记录。请先用测试账号验证，并确认模型服务可以处理这些内容。
 
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](#)

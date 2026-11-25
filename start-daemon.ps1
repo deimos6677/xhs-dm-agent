@@ -34,11 +34,7 @@ Get-CimInstance Win32_Process -Filter "Name='ego-browser.exe'" |
     Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
   }
 
-$otherEgoProcs = @(Get-CimInstance Win32_Process -Filter "Name='ego-browser.exe'" |
-  Where-Object { $_.CommandLine -notmatch ([regex]::Escape($dir.Replace('\', '/')) + '/(\.daemon-entry|daemon)\.mjs') })
-$shouldResetNodeService = $ResetNodeService -or ($otherEgoProcs.Count -eq 0)
-
-if ($shouldResetNodeService) {
+if ($ResetNodeService) {
   Get-CimInstance Win32_Process -Filter "Name='ego.exe'" |
     Where-Object { $_.CommandLine -match 'ego\.mojom\.NodeService' } |
     ForEach-Object {
@@ -47,7 +43,7 @@ if ($shouldResetNodeService) {
     }
   Start-Sleep -Milliseconds 600
 } else {
-  Write-Host "[LAUNCHER] 检测到其他 ego-browser.exe 正在运行，跳过重置 NodeService（如需强刷子模块缓存请传 -ResetNodeService）" -ForegroundColor Yellow
+  Write-Host "[LAUNCHER] 默认不重置共享 NodeService（如需强刷子模块缓存请传 -ResetNodeService）" -ForegroundColor Yellow
 }
 
 [System.IO.File]::WriteAllText($logFile, "", $utf8NoBom)
