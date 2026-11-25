@@ -482,6 +482,7 @@ let createdForXhs = null;
 await attachChatPage({ spaceId: 5, profileId: "Profile 2", excludeSpaceNames: ["other-agent"] }, {
   listTaskSpaces: async () => [
     { id: 0, profileId: "Profile 1", name: "personal", ownership: "user" },
+    { id: 8, profileId: "Profile 2", name: "unrelated", ownership: "user", recentTabTitles: ["Chat"] },
     { id: 9, profileId: "Profile 2", name: "other-agent", ownership: "agent", recentTabTitles: ["创作服务平台"] }
   ],
   taskSpace: async (arg, opts) => {

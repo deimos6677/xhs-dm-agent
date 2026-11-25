@@ -265,8 +265,7 @@ export async function attachChatPage(
     const eligibleSpaces = allSpaces.filter(s => s.profileId === profileId && !excluded.has(s.name));
     const entry =
       (exactById?.profileId === profileId && !excluded.has(exactById?.name) ? exactById : null) ||
-      eligibleSpaces.find(s => s.name === spaceName) ||
-      eligibleSpaces.find(s => (s.recentTabTitles || []).some(t => /小红书|私信|chat/i.test(t)));
+      eligibleSpaces.find(s => s.name === spaceName);
 
     if (!entry) {
       space = await runtime.taskSpace(spaceName, { profileId });
