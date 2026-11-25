@@ -1,0 +1,27 @@
+{
+  "name": "xhs-dm-agent",
+  "version": "1.0.0",
+  "description": "Zero-dependency Xiaohongshu (RedNote) web DM AI screening & auto-reply daemon on ego lite with 4-gate safety verification, profile lookup, structured slot extraction, and human handoff.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test brain.test.mjs daemon.test.mjs"
+  },
+  "keywords": [
+    "xiaohongshu",
+    "rednote",
+    "xhs",
+    "dm-bot",
+    "auto-reply",
+    "ai-agent",
+    "ego-browser",
+    "ego-lite",
+    "llm",
+    "browser-automation",
+    "lead-screening"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "provider": "openai",
+  "apiBaseUrl": "https://api.deepseek.com/v1",
+  "apiKey": "REPLACE_WITH_YOUR_API_KEY",
+  "model": "deepseek-chat",
+  "proxyUrl": "auto",
+  "debounceMinMs": 2500,
+  "debounceMaxMs": 3500,
+  "maxRepliesPerTurn": 2,
+  "profileId": "Profile 2",
+  "spaceName": "xhs-dm-agent",
+  "excludeSpaceNames": [],
+  "promptFile": ""
+}

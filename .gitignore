@@ -1,0 +1,8 @@
+config.json
+prompt.local.md
+candidates*.json
+candidates-summary*.md
+daemon.lock
+.daemon-entry.mjs
+*.log
+login-qr.png
